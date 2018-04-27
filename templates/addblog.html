@@ -2,17 +2,19 @@
 
 {% block content %}
     <h1>Add A Blog!</h1>
-    <form method='post'>
+    <form action="/addblog" method='post'>
         <label>
-            Title:
+            <div>Title:</div>
             <input type="text" name='blog' value='' />
-            <span class="error">{{name_error}}</span>
+            <div class="error">{{name_error}}</div>
         </label>
+        
         <label>
-            Your New Blog
-            <input type="text" name='content' value='' /> 
-            <span class="error">{{content_error}}</span>
+            <div>Your New Blog</div>
+            <textarea name='content' value=''> </textarea>
+            <div class="error">{{content_error}}</div>
         </label>
+        
         <input type="submit" value='Add Entry' />
     </form>
 
