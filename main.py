@@ -57,6 +57,7 @@ def login():
                 error_message = 'Invalid password'
             elif not user:
                 error_message = 'username does not exist'
+            return render_template('login.html', error_message=error_message)
     return render_template('login.html')
 
 
@@ -116,18 +117,24 @@ def logout():
     return redirect('/mainpage')
 
 
+
+   
+
+
 @app.route('/mainpage', methods=['GET'])
 def display():
-    id = request.args.get('id')
-    user = request.args.get('user')
-    blogs = Blog.query.all()
-    if (id):
+    id = request.args.get('id', -1, type=int)
+    user = request.args.get('user', type=int)
+    if id != -1:
         blog = Blog.query.get(id)
         return render_template('individual.html', blog=blog)
-    if (user):
-        blogs = Blog.query.all()
+    if user:
+        blogs = Blog.query.filter_by(owner_id=user).all()
         return render_template('singleUser.html', blogs=blogs)
 
+
+    blogs = Blog.query.all()
+    return render_template('mainpage.html', blogs=blogs)
 
 
 
@@ -144,7 +151,7 @@ def addblog():
             content_error = 'content can not be empty!'
             return render_template('addblog.html', name_error=name_error, content_error = content_error)
 
-        
+        user = User.query.filter_by(username=session['username']).first()
         new_blog = Blog(blog_name, blog_content, user)
         db.session.add(new_blog)
         db.session.commit()

@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>blog users!</h1>
-
+ 
 
     <hr />
     {% if users|length == 0 %}
@@ -11,7 +11,7 @@
         <ul>
             {% for user in users %}
                 <h1>
-                    <a href="./mainpage?id={{user.id}}">{{user.username}}</a> 
+                    <a href="./mainpage?user={{user.id}}">{{user.username}}</a> 
                 </h1>
               
             {% endfor %}
